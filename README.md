@@ -11,6 +11,11 @@ Application chronomètre, compteur de points de victoire et de Point de Commande
 - compteur minute pour déploiement / compteur temps de jeux pour 5 tours ( 1h30 )
 - export PDF du récap de la partie, total des points, temps de jeux et vainqueur de la partie
 
+# COMMENT INSTALLER #
+
+Prenez le lien dans le setting de la page ou ici https://coffee-time.github.io/chrono-warhammer/ et ouvrez le sur votre navigateur mobile.
+Installez le en temps qu'application sur celui-ci et vous verrez une icone rouge : chrono warhammer 40k
+
 ----
 
 **Application Specification:**
@@ -20,3 +25,8 @@ Application chronomètre, compteur de points de victoire et de Point de Commande
 - Turn breakdown: command / movement / shooting / charge - combat / end of turn
 - Timer for deployment phase; game timer for 5 turns (1 hour 30 minutes)
 - PDF export of the game summary, including total points, game duration, and the winner
+
+# HOW TO INSTALL #
+
+Get the link from the page settings or here: https://coffee-time.github.io/chrono-warhammer/, and open it in your mobile browser.
+Install it as an app on your device, and you will see a red icon: "Chrono Warhammer 40k."
