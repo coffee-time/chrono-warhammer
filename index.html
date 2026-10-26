@@ -67,8 +67,8 @@ body{background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;displ
 <script>
 var KEY="wh40k-chrono-cp-v2";
 var T={
-fr:{pl:"Joueur ",vp:"PV",rl:"T",dep:"Déploiement",game:"Partie",ph:["Cmdt","Mouv.","Tir","Charge","Combat"],full:["Commandement","Mouvement","Tir","Charge","Combat"],start:"Démarrer",phase:"Phase : ",next:"Suivant : ",end:"Fin de mon tour ▶",take:"Prendre la main",pause:"Pause",resume:"Reprendre",round:"Tour ",chrono:"Chrono : ",rot:"Rotation J1 : ",yes:"oui",no:"non",reset:"Remise à zéro",conf:"Confirmer ?",exp:"Export PDF",nm:"Nom du joueur ",lang:"Langue : FR",cpa:["CP : manuel","CP auto : joueur actif"],pri:"Primaire",sec:"Secondaire",pc:"Prim.",sc:"Sec.",tpt:"Points de tournoi (échelle 20-0)",dif:"Écart : ",tv:"Total /100",tps:"PT",bar:"Barème 20-0 : 0-5 PV d'écart = 10-10, puis 1 point par tranche de 5 PV (46-50 = 19-1, 51+ = 20-0)",title:"Résultats de la partie - Warhammer 40k",tie:"Égalité : ",each:" PV chacun",win:"Vainqueur : ",vpr:"Points de victoire par tour",pl1:"Joueur",tot:"Total",tu:"Temps utilisé",over:" (dépassé)",lib:"PDF : bibliothèque non chargée",fail:"Export impossible",failc:"Export impossible : ",inapp:"Ouvre la page dans l'appli Claude",done:"PDF téléchargé",loc:"fr-FR",fn:"resultat-warhammer-40k.pdf"},
-en:{pl:"Player ",vp:"VP",rl:"R",dep:"Deployment",game:"Game",ph:["Cmd","Move","Shoot","Charge","Fight"],full:["Command","Movement","Shooting","Charge","Fight"],start:"Start",phase:"Phase: ",next:"Next: ",end:"End my turn ▶",take:"Take over",pause:"Pause",resume:"Resume",round:"Round ",chrono:"Clock: ",rot:"Flip P1: ",yes:"on",no:"off",reset:"Reset",conf:"Confirm?",exp:"Export PDF",nm:"Player name ",lang:"Language: EN",cpa:["CP: manual","Auto CP: active player"],pri:"Primary",sec:"Secondary",pc:"Pri.",sc:"Sec.",tpt:"Tournament points (20-0 scale)",dif:"Difference: ",tv:"Total /100",tps:"TP",bar:"20-0 scale: 0-5 VP difference = 10-10, then 1 point per 5 VP band (46-50 = 19-1, 51+ = 20-0)",title:"Game results - Warhammer 40k",tie:"Tie: ",each:" VP each",win:"Winner: ",vpr:"Victory points per round",pl1:"Player",tot:"Total",tu:"Time used",over:" (overtime)",lib:"PDF library not loaded",fail:"Export failed",failc:"Export failed: ",inapp:"Open the page in the Claude app",done:"PDF downloaded",loc:"en-GB",fn:"warhammer-40k-results.pdf"}
+fr:{pl:"Joueur ",vp:"PV",rl:"T",dep:"Déploiement",game:"Partie",ph:["Cmdt","Mouv.","Tir","Charge","Combat"],full:["Commandement","Mouvement","Tir","Charge","Combat"],start:"Démarrer",phase:"Phase : ",next:"Suivant : ",end:"Fin de mon tour ▶",take:"Prendre la main",pause:"Pause",resume:"Reprendre",round:"Tour ",chrono:"Chrono : ",rot:"Rotation J1 : ",yes:"oui",no:"non",reset:"Remise à zéro",conf:"Confirmer ?",exp:"Export PDF",nm:"Nom du joueur ",lang:"Langue : FR",cpa:["CP : manuel","CP auto : les deux joueurs"],pri:"Primaire",sec:"Secondaire",pc:"Prim.",sc:"Sec.",tpt:"Points de tournoi (échelle 20-0)",dif:"Écart : ",tv:"Total /100",tps:"PT",bar:"Barème 20-0 : 0-5 PV d'écart = 10-10, puis 1 point par tranche de 5 PV (46-50 = 19-1, 51+ = 20-0)",title:"Résultats de la partie - Warhammer 40k",tie:"Égalité : ",each:" PV chacun",win:"Vainqueur : ",vpr:"Points de victoire par tour",pl1:"Joueur",tot:"Total",tu:"Temps utilisé",over:" (dépassé)",lib:"PDF : bibliothèque non chargée",fail:"Export impossible",failc:"Export impossible : ",inapp:"Ouvre la page dans l'appli Claude",done:"PDF téléchargé",loc:"fr-FR",fn:"resultat-warhammer-40k.pdf"},
+en:{pl:"Player ",vp:"VP",rl:"R",dep:"Deployment",game:"Game",ph:["Cmd","Move","Shoot","Charge","Fight"],full:["Command","Movement","Shooting","Charge","Fight"],start:"Start",phase:"Phase: ",next:"Next: ",end:"End my turn ▶",take:"Take over",pause:"Pause",resume:"Resume",round:"Round ",chrono:"Clock: ",rot:"Flip P1: ",yes:"on",no:"off",reset:"Reset",conf:"Confirm?",exp:"Export PDF",nm:"Player name ",lang:"Language: EN",cpa:["CP: manual","Auto CP: both players"],pri:"Primary",sec:"Secondary",pc:"Pri.",sc:"Sec.",tpt:"Tournament points (20-0 scale)",dif:"Difference: ",tv:"Total /100",tps:"TP",bar:"20-0 scale: 0-5 VP difference = 10-10, then 1 point per 5 VP band (46-50 = 19-1, 51+ = 20-0)",title:"Game results - Warhammer 40k",tie:"Tie: ",each:" VP each",win:"Winner: ",vpr:"Victory points per round",pl1:"Player",tot:"Total",tu:"Time used",over:" (overtime)",lib:"PDF library not loaded",fail:"Export failed",failc:"Export failed: ",inapp:"Open the page in the Claude app",done:"PDF downloaded",loc:"en-GB",fn:"warhammer-40k-results.pdf"}
 };
 function defLang(){return((navigator.language||"fr").slice(0,2)==="fr")?"fr":"en"}
 function L(){return T[S.lang]}
@@ -89,8 +89,8 @@ function fmt(v){var s=Math.ceil(v),n=s<0;s=Math.abs(s);var h=Math.floor(s/3600),
 return(n?"-":"")+(h?h+":"+String(m).padStart(2,"0"):String(m).padStart(2,"0"))+":"+String(c).padStart(2,"0")}
 function sum(a){return a.reduce(function(x,y){return x+y},0)}
 function tick(){if(S.run&&S.active!==null){var n=Date.now();S.p[S.active][S.tp]-=(n-last)/1000;last=n}}
-function gainCp(i){if(S.cpm===1&&S.tp==="game")S.p[i].cp++}
-function endTurn(i){S.done++;if(S.done>=2){S.round=Math.min(4,S.round+1);S.done=0;S.sel=[S.round,S.round]}S.active=1-i;S.ph=0;gainCp(1-i)}
+function gainBoth(){if(S.cpm===1&&S.tp==="game"){S.p[0].cp++;S.p[1].cp++}}
+function endTurn(i){S.done++;if(S.done>=2){if(S.round<4)gainBoth();S.round=Math.min(4,S.round+1);S.done=0;S.sel=[S.round,S.round]}S.active=1-i;S.ph=0}
 function build(i){
 var z=document.getElementById("z"+i),h="",l=L();
 h+='<div class="row"><input class="nm" maxlength="20" aria-label="'+l.nm+(i+1)+'"><div class="seg"><button data-c="0">'+l.pc+'</button><button data-c="1">'+l.sc+'</button></div></div>';
@@ -107,7 +107,7 @@ z.querySelectorAll(".h").forEach(function(c){c.onclick=function(){if(S.active===
 z.querySelectorAll("[data-c]").forEach(function(b){b.onclick=function(){S.cat[i]=Number(b.dataset.c);save();draw()}});
 z.querySelector(".pass").onclick=function(){
 tick();
-if(S.active===null){S.active=i;S.ph=0;gainCp(i)}
+if(S.active===null){S.active=i;S.ph=0;gainBoth()}
 else if(S.tp==="dep"){S.active=(S.active===i)?1-i:i}
 else if(S.active===i){if(S.ph<4)S.ph++;else endTurn(i)}
 else{S.active=i;S.ph=0}
@@ -179,7 +179,7 @@ try{var u=URL.createObjectURL(D.output("blob")),a2=document.createElement("a");a
 setInterval(function(){tick();if(S.run){save();draw()}},250);
 document.getElementById("bp").onclick=function(){if(S.active===null)return;tick();S.run=!S.run;last=Date.now();save();draw()};
 document.getElementById("bt").onclick=function(){S.round=(S.round+1)%5;S.sel=[S.round,S.round];S.done=0;save();draw()};
-document.getElementById("bph").onclick=function(){tick();S.tp=S.tp==="dep"?"game":"dep";if(S.tp==="game"&&!S.gs){S.gs=1;S.round=0;S.done=0;S.ph=0;S.sel=[0,0];if(S.active!==null)gainCp(S.active)}last=Date.now();save();draw()};
+document.getElementById("bph").onclick=function(){tick();S.tp=S.tp==="dep"?"game":"dep";if(S.tp==="game"&&!S.gs){S.gs=1;S.round=0;S.done=0;S.ph=0;S.sel=[0,0];if(S.active!==null)gainBoth()}last=Date.now();save();draw()};
 document.getElementById("br").onclick=function(){S.flip=!S.flip;save();draw()};
 document.getElementById("bz").onclick=function(){var b=this;
 if(!armed){armed=1;b.textContent=L().conf;setTimeout(function(){armed=0;b.textContent=L().reset},3000);return}
