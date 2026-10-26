@@ -35,11 +35,11 @@ Install it as an app on your device, and you will see a red icon: "Chrono Warham
 
 ----
 
-#screenshots#
+# screenshots #
 
-<img width="944" height="2024" alt="image" src="https://github.com/user-attachments/assets/b9bb4043-0900-47be-aa13-7be0cfb36bdf" />
+<img width="30%"  alt="image" src="https://github.com/user-attachments/assets/b9bb4043-0900-47be-aa13-7be0cfb36bdf" />
 
 
-<img width="944" height="2024" alt="image" src="https://github.com/user-attachments/assets/2c502000-377a-415a-8b7a-851a82bf1e4d" />
+<img width="30%" alt="image" src="https://github.com/user-attachments/assets/2c502000-377a-415a-8b7a-851a82bf1e4d" />
 
 
