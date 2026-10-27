@@ -1,6 +1,6 @@
 {
- "name": "Chrono Warhammer 40k",
- "short_name": "Chrono 40k",
+ "name": "Chrono CP/PV (outil de fan)",
+ "short_name": "Chrono CP/PV",
  "start_url": "./",
  "display": "standalone",
  "background_color": "#9b1c1c",

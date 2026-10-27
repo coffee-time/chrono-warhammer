@@ -1,45 +1,11 @@
-# chrono-warhammer FR / EN
-🇬🇧 An application featuring a timer, a tracker for victory points and command points, a turn counter, and the ability to export a summary of the game as a PDF
----
-🇫🇷 Application chronomètre, compteur de points de victoire et de Point de Commandement, compte tour et au final un export pdf du recap de la partie.
+# Chrono CP/PV
 
+**FR** — Chronomètre à deux joueurs avec compteur de points de commandement (CP), points de victoire (primaires et secondaires par tour), phases de jeu et récapitulatif PDF avec points de tournoi (échelle 20-0). Interface en français et en anglais.
 
-**Spécification de l'application :**
-- ajouter les noms des deux joueurs
-- compte tour avec points de victoire
-- compte des points de commandement avec ajout / suppression
-- détails du tour : cmdt / mouvement / tir / charge -combat fin du tour
-- compteur minute pour déploiement / compteur temps de jeux pour 5 tours ( 1h30 )
-- export PDF du récap de la partie, total des points, temps de jeux et vainqueur de la partie
+**EN** — Two-player clock with command point (CP) counter, victory points (primary and secondary per round), game phases and a PDF summary with tournament points (20-0 scale). French and English interface.
 
-# COMMENT INSTALLER #
+## Mention / Disclaimer
 
-Prenez le lien dans le setting de la page ou ici https://coffee-time.github.io/chrono-warhammer/ et ouvrez le sur votre navigateur mobile.
-Installez le en temps qu'application sur celui-ci et vous verrez une icone rouge : chrono warhammer 40k
+**FR** — Outil de fan non officiel, gratuit et sans but lucratif, sans lien avec Games Workshop. Warhammer 40,000 et les noms associés sont des marques de Games Workshop. Les noms et valeurs de points des missions proviennent du projet communautaire Game Datacards ; aucun texte de règles ni image officielle n'est inclus.
 
-----
-
-**Application Specification:**
-- Add names for both players
-- Turn counter with victory points
-- Command point tracker with add/remove functionality
-- Turn breakdown: command / movement / shooting / charge - combat / end of turn
-- Timer for deployment phase; game timer for 5 turns (1 hour 30 minutes)
-- PDF export of the game summary, including total points, game duration, and the winner
-
-# HOW TO INSTALL #
-
-Get the link from the page settings or here: https://coffee-time.github.io/chrono-warhammer/, and open it in your mobile browser.
-Install it as an app on your device, and you will see a red icon: "Chrono Warhammer 40k."
-
-
-----
-
-# screenshots #
-
-<img width="30%"  alt="image" src="https://github.com/user-attachments/assets/b9bb4043-0900-47be-aa13-7be0cfb36bdf" />
-
-
-<img width="30%" alt="image" src="https://github.com/user-attachments/assets/2c502000-377a-415a-8b7a-851a82bf1e4d" />
-
-
+**EN** — Unofficial, free, non-commercial fan tool, not affiliated with or endorsed by Games Workshop. Warhammer 40,000 and related names are trademarks of Games Workshop. Mission names and point values come from the Game Datacards community project; no official rules text or artwork is included.

@@ -7,8 +7,8 @@
 <meta name="theme-color" content="#9b1c1c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Chrono 40k">
-<title>Chrono, CP et PV Warhammer 40k</title>
+<meta name="apple-mobile-web-app-title" content="Chrono CP/PV">
+<title>Chrono CP et PV (outil de fan)</title>
 <style>
 :root{--bg:#f2f2f2;--bar:#d8d8d8;--fg:#111;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111;--bar:#222;--fg:#eee}}
@@ -74,35 +74,47 @@ body{background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;displ
 .ms .vb button{border:0;border-radius:8px;background:rgba(255,255,255,.25);color:#fff;padding:8px 12px}
 .ms .sh{margin:8px 0 2px;font-weight:600}
 .ms p{margin:6px 0}
-.pu{display:none;position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 56px) 12px 12px}
-.pu.open{display:flex}
-.pu img{max-width:100%;max-height:100%;border-radius:10px;background:#fff}
-.pu .x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);right:12px;width:40px;height:40px;border-radius:50%;border:0;background:#fff;color:#111;font-size:1.4rem;line-height:1}
-.pu .fb{display:none;color:#fff;text-align:center;font-size:.95rem}
-.pu .fb a{color:#fff}
+.dis{display:block;font-size:.68rem;opacity:.85;padding:2px 2px 0}
+.ms .dis2{display:block;font-size:.7rem;opacity:.8;margin-top:6px}
+.ms .tt{font-size:.85rem;opacity:.9;margin:6px 0}
+.ms .bp{display:block;margin-top:6px;font-size:.9rem}
+.ms .vb{flex-wrap:wrap}
+.ms.on{display:flex;flex-direction:column;gap:8px;padding-bottom:10px}
+.ms .mh{margin:0}
+.ms .mp{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between;gap:4px;padding:8px;margin:0;overflow:auto}
+.ms .r1,.ms .r2{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.ms .r1{flex-wrap:nowrap}
+.ms h3{flex:none;margin:0;font-size:.95rem;max-width:40%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ms select{flex:1 1 120px;width:auto;min-width:0;margin:0;padding:6px;font-size:.82rem}
+.ms .lbl{font-size:.82rem;flex:1}
+.ms .pv{min-width:2.2ch;text-align:center;font-size:.9rem}
+.ms .r2 button{border:0;border-radius:8px;background:rgba(255,255,255,.25);color:#fff;padding:5px 8px;font-size:.8rem}
+.ms .tt,.ms .bp{font-size:.78rem;margin:0}
+.ms .ft{justify-content:space-between}
+.ms .dis2{flex:none;margin:0}
 </style></head><body>
 <section class="z p0 flip" id="z0"></section>
-<div class="bar"><button id="bp">Pause</button><button id="bt">Tour</button><button id="bph">Chrono</button><button id="br">Rotation J1</button><button id="bs">Missions</button><button id="bz">Remise à zéro</button><button id="bm">Menu ▾</button><div class="mn" id="mn"><button id="bx">Export PDF</button><button id="bl">FR</button><button id="bc">CP</button></div></div>
+<div class="bar"><button id="bp">Pause</button><button id="bt">Tour</button><button id="bph">Chrono</button><button id="br">Rotation J1</button><button id="bs">Missions</button><button id="bz">Remise à zéro</button><button id="bm">Menu ▾</button><div class="mn" id="mn"><button id="bx">Export PDF</button><button id="bl">FR</button><button id="bc">CP</button><small class="dis" id="dis"></small></div></div>
 <section class="z p1" id="z1"></section>
 <div id="ms" class="ms"></div>
-<div id="pu" class="pu"><button class="x" id="pux" aria-label="Fermer">✕</button><img id="pui" alt=""><div class="fb" id="puf"></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 var KEY="wh40k-chrono-cp-v2";
 var T={
-fr:{pl:"Joueur ",vp:"PV",rl:"T",dep:"Déploiement",game:"Partie",ph:["Cmdt","Mouv.","Tir","Charge","Combat"],full:["Commandement","Mouvement","Tir","Charge","Combat"],start:"Démarrer",phase:"Phase : ",next:"Suivant : ",end:"Fin de mon tour ▶",take:"Prendre la main",pause:"Pause",resume:"Reprendre",round:"Tour ",chrono:"Chrono : ",rot:"Rotation J1 : ",yes:"oui",no:"non",reset:"Remise à zéro",conf:"Confirmer ?",exp:"Export PDF",nm:"Nom du joueur ",lang:"Langue : FR",ms:"Missions",mclose:"Fermer",disp:"Force de disposition",prim:"Mission primaire",see:"Voir la carte",sec2:"Missions secondaires",pick:"— choisir —",fixed:" (fixe)",both:"Choisis les deux forces de disposition pour voir les missions primaires.",mt:"Missions et objectifs",cfail:"La carte ne peut pas s'afficher ici.",done2:"Missions secondaires réalisées :",cpa:["CP : manuel","CP auto : les deux joueurs"],pri:"Primaire",sec:"Secondaire",pc:"Prim.",sc:"Sec.",tpt:"Points de tournoi (échelle 20-0)",dif:"Écart : ",tv:"Total /100",tps:"PT",bar:"Barème 20-0 : 0-5 PV d'écart = 10-10, puis 1 point par tranche de 5 PV (46-50 = 19-1, 51+ = 20-0)",title:"Résultats de la partie - Warhammer 40k",tie:"Égalité : ",each:" PV chacun",win:"Vainqueur : ",vpr:"Points de victoire par tour",pl1:"Joueur",tot:"Total",tu:"Temps utilisé",over:" (dépassé)",lib:"PDF : bibliothèque non chargée",fail:"Export impossible",failc:"Export impossible : ",inapp:"Ouvre la page dans l'appli Claude",done:"PDF téléchargé",loc:"fr-FR",fn:"resultat-warhammer-40k.pdf"},
-en:{pl:"Player ",vp:"VP",rl:"R",dep:"Deployment",game:"Game",ph:["Cmd","Move","Shoot","Charge","Fight"],full:["Command","Movement","Shooting","Charge","Fight"],start:"Start",phase:"Phase: ",next:"Next: ",end:"End my turn ▶",take:"Take over",pause:"Pause",resume:"Resume",round:"Round ",chrono:"Clock: ",rot:"Flip P1: ",yes:"on",no:"off",reset:"Reset",conf:"Confirm?",exp:"Export PDF",nm:"Player name ",lang:"Language: EN",ms:"Missions",mclose:"Close",disp:"Force disposition",prim:"Primary mission",see:"View card",sec2:"Secondary missions",pick:"— choose —",fixed:" (fixed)",both:"Pick both force dispositions to see the primary missions.",mt:"Missions and objectives",cfail:"The card can't be displayed here.",done2:"Secondary missions scored:",cpa:["CP: manual","Auto CP: both players"],pri:"Primary",sec:"Secondary",pc:"Pri.",sc:"Sec.",tpt:"Tournament points (20-0 scale)",dif:"Difference: ",tv:"Total /100",tps:"TP",bar:"20-0 scale: 0-5 VP difference = 10-10, then 1 point per 5 VP band (46-50 = 19-1, 51+ = 20-0)",title:"Game results - Warhammer 40k",tie:"Tie: ",each:" VP each",win:"Winner: ",vpr:"Victory points per round",pl1:"Player",tot:"Total",tu:"Time used",over:" (overtime)",lib:"PDF library not loaded",fail:"Export failed",failc:"Export failed: ",inapp:"Open the page in the Claude app",done:"PDF downloaded",loc:"en-GB",fn:"warhammer-40k-results.pdf"}
+fr:{pl:"Joueur ",vp:"PV",rl:"T",dep:"Déploiement",game:"Partie",ph:["Cmdt","Mouv.","Tir","Charge","Combat"],full:["Commandement","Mouvement","Tir","Charge","Combat"],start:"Démarrer",phase:"Phase : ",next:"Suivant : ",end:"Fin de mon tour ▶",take:"Prendre la main",pause:"Pause",resume:"Reprendre",round:"Tour ",chrono:"Chrono : ",rot:"Rotation J1 : ",yes:"oui",no:"non",reset:"Remise à zéro",conf:"Confirmer ?",exp:"Export PDF",nm:"Nom du joueur ",lang:"Langue : FR",ms:"Missions",mclose:"Fermer",disp:"Force de disposition",prim:"Mission primaire",see:"Voir la carte",sec2:"Missions secondaires",pick:"— choisir —",fixed:" (fixe)",both:"Choisis les deux forces de disposition pour voir les missions primaires.",mt:"Missions et objectifs",disc:"Outil de fan non officiel, sans lien avec Games Workshop. Warhammer 40,000 et les noms associés sont des marques de Games Workshop. Données des missions : projet communautaire Game Datacards.",bp:"Armée peinte (+10 PV)",bpl:"Peinture",cfail:"La carte ne peut pas s'afficher ici.",done2:"Missions secondaires réalisées :",cpa:["CP : manuel","CP auto : les deux joueurs"],pri:"Primaire",sec:"Secondaire",pc:"Prim.",sc:"Sec.",tpt:"Points de tournoi (échelle 20-0)",dif:"Écart : ",tv:"Total /100",tps:"PT",bar:"Barème 20-0 : 0-5 PV d'écart = 10-10, puis 1 point par tranche de 5 PV (46-50 = 19-1, 51+ = 20-0)",title:"Résultats de la partie",tie:"Égalité : ",each:" PV chacun",win:"Vainqueur : ",vpr:"Points de victoire par tour",pl1:"Joueur",tot:"Total",tu:"Temps utilisé",over:" (dépassé)",lib:"PDF : bibliothèque non chargée",fail:"Export impossible",failc:"Export impossible : ",inapp:"Ouvre la page dans l'appli Claude",done:"PDF téléchargé",loc:"fr-FR",fn:"resultat-warhammer-40k.pdf"},
+en:{pl:"Player ",vp:"VP",rl:"R",dep:"Deployment",game:"Game",ph:["Cmd","Move","Shoot","Charge","Fight"],full:["Command","Movement","Shooting","Charge","Fight"],start:"Start",phase:"Phase: ",next:"Next: ",end:"End my turn ▶",take:"Take over",pause:"Pause",resume:"Resume",round:"Round ",chrono:"Clock: ",rot:"Flip P1: ",yes:"on",no:"off",reset:"Reset",conf:"Confirm?",exp:"Export PDF",nm:"Player name ",lang:"Language: EN",ms:"Missions",mclose:"Close",disp:"Force disposition",prim:"Primary mission",see:"View card",sec2:"Secondary missions",pick:"— choose —",fixed:" (fixed)",both:"Pick both force dispositions to see the primary missions.",mt:"Missions and objectives",disc:"Unofficial fan tool, not affiliated with or endorsed by Games Workshop. Warhammer 40,000 and related names are trademarks of Games Workshop. Mission data: Game Datacards community project.",bp:"Painted army (+10 VP)",bpl:"Painting",cfail:"The card can't be displayed here.",done2:"Secondary missions scored:",cpa:["CP: manual","Auto CP: both players"],pri:"Primary",sec:"Secondary",pc:"Pri.",sc:"Sec.",tpt:"Tournament points (20-0 scale)",dif:"Difference: ",tv:"Total /100",tps:"TP",bar:"20-0 scale: 0-5 VP difference = 10-10, then 1 point per 5 VP band (46-50 = 19-1, 51+ = 20-0)",title:"Game results",tie:"Tie: ",each:" VP each",win:"Winner: ",vpr:"Victory points per round",pl1:"Player",tot:"Total",tu:"Time used",over:" (overtime)",lib:"PDF library not loaded",fail:"Export failed",failc:"Export failed: ",inapp:"Open the page in the Claude app",done:"PDF downloaded",loc:"en-GB",fn:"warhammer-40k-results.pdf"}
 };
 function defLang(){return((navigator.language||"fr").slice(0,2)==="fr")?"fr":"en"}
 function L(){return T[S.lang]}
 function mk(){return{dep:1800,game:5400,cp:0,pv:[0,0,0,0,0],sv:[0,0,0,0,0]}}
-function fresh(){var l=defLang();return{p:[mk(),mk()],tp:"dep",active:null,run:false,flip:true,round:0,done:0,ph:0,sel:[0,0],cat:[0,0],dsp:[-1,-1],obj:[[],[]],cpm:1,lang:l,names:[T[l].pl+"1",T[l].pl+"2"]}}
+function fresh(){var l=defLang();return{p:[mk(),mk()],tp:"dep",active:null,run:false,flip:true,round:0,done:0,ph:0,sel:[0,0],cat:[0,0],bp:[0,0],dsp:[-1,-1],obj:[[],[]],cpm:1,lang:l,names:[T[l].pl+"1",T[l].pl+"2"]}}
 var S=fresh();
 try{var r=localStorage.getItem(KEY);if(r){S=JSON.parse(r);S.run=false}}catch(e){}
 if(!S.lang)S.lang=defLang();
 if(S.cpm===undefined||S.cpm>1)S.cpm=1;
 if(!S.cat)S.cat=[0,0];
 if(!S.dsp)S.dsp=[-1,-1];
+if(!S.bp)S.bp=[0,0];
 if(!S.obj)S.obj=[[],[]];
 if(S.tp==="game"&&S.gs===undefined)S.gs=1;
 S.p.forEach(function(p){if(!p.sv)p.sv=[0,0,0,0,0]});
@@ -126,7 +138,7 @@ h+='<div class="tm"><div class="t" data-k="dep"><small>'+l.dep+'</small><span></
 z.innerHTML=h;
 var ni=z.querySelector(".nm");ni.value=S.names[i];ni.oninput=function(){S.names[i]=ni.value;save()};
 z.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){S.p[i].cp=Math.max(0,S.p[i].cp+Number(b.dataset.d));save();draw()}});
-z.querySelectorAll("[data-v]").forEach(function(b){b.onclick=function(){var a=(S.cat[i]?S.p[i].sv:S.p[i].pv),s=S.sel[i];a[s]=Math.max(0,a[s]+Number(b.dataset.v));save();draw()}});
+z.querySelectorAll("[data-v]").forEach(function(b){b.onclick=function(){cap(i,S.cat[i],S.sel[i],Number(b.dataset.v));save();draw()}});
 z.querySelectorAll(".c").forEach(function(c){c.onclick=function(){S.sel[i]=Number(c.dataset.r);save();draw()}});
 z.querySelectorAll(".h").forEach(function(c){c.onclick=function(){if(S.active===i){S.ph=Number(c.dataset.p);save();draw()}}});
 z.querySelectorAll("[data-c]").forEach(function(b){b.onclick=function(){S.cat[i]=Number(b.dataset.c);save();draw()}});
@@ -162,9 +174,10 @@ document.getElementById("bt").textContent=l.round+(S.round+1)+"/5";
 document.getElementById("bph").textContent=l.chrono+(S.tp==="dep"?l.dep:l.game);
 document.getElementById("br").textContent=l.rot+(S.flip?l.yes:l.no);document.getElementById("bc").textContent=l.cpa[S.cpm]}
 function labels(){var l=L();document.documentElement.lang=S.lang;
-document.getElementById("bx").textContent=l.exp;document.getElementById("bl").textContent=l.lang;
+document.getElementById("bx").textContent=l.exp;document.getElementById("dis").textContent=l.disc;document.getElementById("bl").textContent=l.lang;
 if(!armed)document.getElementById("bz").textContent=l.reset}
 function tot(p){return sum(p.pv)+sum(p.sv)}
+function fin(i){return tot(S.p[i])+(S.bp[i]?10:0)}
 function tpts(d){return d<=5?10:Math.min(20,10+Math.ceil((d-5)/5))}
 function tr(D,cells,xs,y,b){D.setFont("helvetica",b?"bold":"normal");cells.forEach(function(c,k){D.text(String(c),xs[k],y)})}
 function used(p,k,tot){return fmt(Math.round(tot-p[k]))+" / "+fmt(tot)+(p[k]<0?L().over:"")}
@@ -173,7 +186,7 @@ var l=L(),dl=null;try{dl=await claude.use("downloads")}catch(e){}
 function warn(m){btn.textContent=m;setTimeout(function(){btn.textContent=L().exp},2500)}
 if(!window.jspdf){warn(l.lib);return}
 tick();
-var D=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),a=tot(S.p[0]),b=tot(S.p[1]),y=22;
+var D=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),a=fin(0),b=fin(1),y=22;
 try{D.addImage(GOB,"PNG",159,9,36,32)}catch(e){}
 D.setFont("helvetica","bold");D.setFontSize(18);D.text(l.title,15,y);
 y+=8;D.setFont("helvetica","normal");D.setFontSize(11);D.text(new Date().toLocaleDateString(l.loc),15,y);
@@ -189,9 +202,9 @@ y+=7;tr(D,["  "+l.sec].concat(p.sv,[sum(p.sv)]),xs,y,0);
 y+=7;tr(D,["  "+l.tot].concat(p.pv.map(function(v,k){return v+p.sv[k]}),[tot(p)]),xs,y,1)}
 y+=14;D.setFont("helvetica","bold");D.setFontSize(12);D.text(l.tpt,15,y);y+=8;D.setFontSize(11);
 var d=Math.abs(a-b),w=tpts(d),tp=a>b?[w,20-w]:(b>a?[20-w,w]:[10,10]);
-var x3=[15,75,105,135,170];
-tr(D,[l.pl1,l.pri,l.sec,l.tv,l.tps],x3,y,1);D.line(15,y+2,195,y+2);
-for(var m=0;m<2;m++){y+=8;var pm=S.p[m];tr(D,[S.names[m].slice(0,24),sum(pm.pv),sum(pm.sv),tot(pm)+" / 100",tp[m]],x3,y,0)}
+var x3=[15,62,85,108,130,172];
+tr(D,[l.pl1,l.pri,l.sec,l.bpl,l.tv,l.tps],x3,y,1);D.line(15,y+2,195,y+2);
+for(var m=0;m<2;m++){y+=8;var pm=S.p[m];tr(D,[S.names[m].slice(0,16),sum(pm.pv),sum(pm.sv),S.bp[m]?10:0,fin(m)+" / 100",tp[m]],x3,y,0)}
 y+=9;D.setFont("helvetica","normal");D.text(l.dif+d+" "+l.vp,15,y);
 y+=6;D.setFontSize(9);D.text(l.bar,15,y);D.setFontSize(11);
 y+=14;D.setFont("helvetica","bold");D.setFontSize(12);D.text(l.tu,15,y);y+=8;D.setFontSize(11);
@@ -199,14 +212,15 @@ var x2=[15,75,130];
 tr(D,[l.pl1,l.dep,l.game],x2,y,1);D.line(15,y+2,195,y+2);
 for(var j=0;j<2;j++){y+=9;var q=S.p[j];tr(D,[S.names[j].slice(0,24),used(q,"dep",1800),used(q,"game",5400)],x2,y,0)}
 if(S.dsp.some(function(x){return x>=0})){y+=14;D.setFont("helvetica","bold");D.setFontSize(12);D.text(l.disp,15,y);y+=8;D.setFontSize(11);D.setFont("helvetica","normal");
-for(var q2=0;q2<2;q2++){y+=7;D.text(S.names[q2].slice(0,24)+" : "+(S.dsp[q2]>=0?DISP[S.dsp[q2]]:"-")+" / "+l.prim+" : "+(prim(q2)||"-"),15,y)}}
+for(var q2=0;q2<2;q2++){y+=7;D.text(S.names[q2].slice(0,24)+" : "+(S.dsp[q2]>=0?nm(DT.d[S.dsp[q2]]):"-")+" / "+l.prim+" : "+(prim(q2)?nm(prim(q2)):"-"),15,y)}}
 var anyO=S.dsp.some(function(x){return x>=0})||S.obj.some(function(a){return a.some(function(r){return r&&r.some(function(o){return o.k>=0})})});
 if(anyO){D.addPage();y=22;D.setFont("helvetica","bold");D.setFontSize(16);D.text(l.mt,15,y);
 for(var u=0;u<2;u++){y+=12;D.setFont("helvetica","bold");D.setFontSize(12);D.text(S.names[u].slice(0,24),15,y);D.setFontSize(11);D.setFont("helvetica","normal");
-y+=7;D.text(l.disp+": "+(S.dsp[u]>=0?DISP[S.dsp[u]]:"-"),15,y);
-y+=7;D.text(l.prim+": "+(prim(u)||"-"),15,y);
+y+=7;D.text(l.disp+": "+(S.dsp[u]>=0?nm(DT.d[S.dsp[u]]):"-"),15,y);
+y+=7;D.text(l.prim+": "+(prim(u)?nm(prim(u)):"-"),15,y);
 y+=7;D.setFont("helvetica","bold");D.text(l.done2,15,y);D.setFont("helvetica","normal");
-for(var r2=0;r2<5;r2++){var ro=S.obj[u][r2];if(!ro)continue;var pts=ro.filter(function(o){return o.k>=0&&o.vp>0}).map(function(o){return SEC[o.k][0]+" ("+o.vp+" "+l.vp+")"});if(!pts.length)continue;y+=7;D.text(l.rl+(r2+1)+" : "+pts.join(", "),20,y)}}}
+for(var r2=0;r2<5;r2++){var ro=S.obj[u][r2];if(!ro)continue;var pts=ro.filter(function(o){return o.k>=0&&o.vp>0}).map(function(o){return nm(DT.s[o.k])+" ("+o.vp+" "+l.vp+")"});if(!pts.length)continue;y+=7;D.text(l.rl+(r2+1)+" : "+pts.join(", "),20,y)}}}
+var pgc=D.internal.getNumberOfPages();for(var pg=1;pg<=pgc;pg++){D.setPage(pg);D.setFont("helvetica","normal");D.setFontSize(8);D.text(D.splitTextToSize(l.disc,180),15,282)}
 if(dl){try{await dl.save({filename:l.fn,data:D.output("arraybuffer")})}catch(e){if(!e||e.code!=="declined")warn(l.failc+(e&&e.code||"error"))}return}
 try{var u=URL.createObjectURL(D.output("blob")),a2=document.createElement("a");a2.href=u;a2.download=l.fn;document.body.appendChild(a2);a2.click();a2.remove();warn(window.top!==window?l.inapp:l.done)}catch(e){warn(l.fail)}
 }
@@ -225,55 +239,43 @@ save();build(0);build(1);labels();draw()};
 document.getElementById("bm").onclick=function(){document.getElementById("mn").classList.toggle("open")};
 document.addEventListener("click",function(e){var m=document.getElementById("mn");if(m.classList.contains("open")&&!m.contains(e.target)&&e.target.id!=="bm")m.classList.remove("open")});
 document.getElementById("bc").onclick=function(){S.cpm=(S.cpm+1)%2;save();draw()};
-var DISP=["Take and Hold","Purge the Foe","Disruption","Reconnaissance","Priority Assets"];
-var DSL=["take-and-hold","purge-the-foe","disruption","reconnaissance","priority-assets"];
-var MX=[["Battlefield Dominance","Immovable Object","Determined Acquisition","Purge and Secure","Inescapable Dominion"],
-["Unstoppable Force","Meatgrinder","Punishment","Consecrate","Destroyer's Wrath"],
-["Death Trap","Delaying Action","Outmanoeuvre","Smoke and Mirrors","Locate and Deny"],
-["Reconnaissance Sweep","Triangulation","Surveil the Foe","Gather Intel","Search and Scour"],
-["Secure Asset","Vital Link","Extract Relic","Vanguard Operation","Sabotage"]];
-var SEC=[["A Grievous Blow","a-grievous-blow-defender",1],["A Tempting Target","a-tempting-target-defender"],["Assassination","assassination-defender",1],["Beacon","beacon-defender"],["Behind Enemy Lines","behind-enemy-lines-defender"],["Bring it Down","bring-it-down-defender",1],["Burden of Trust","burden-of-trust-defender"],["Centre Ground","centre-ground-defender"],["Cleanse","cleanse-defender"],["Defend Stronghold","defend-stronghold-defender"],["Display of Might","display-of-might-defender"],["Engage on All Fronts","engage-on-all-fronts-defender",1],["Forward Position","forward-position-defender"],["No Prisoners","no-prisoners-defender"],["Outflank","outflank-defender"],["Overwhelming Force","overwhelming-force-defender"],["Plunder","plunder-defender"],["Secure No Man's Land","secure-no-man-s-land-defender"]];
-function slg(n){return n.toLowerCase().replace(/'/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
-function prim(i){var a=S.dsp[i],b=S.dsp[1-i];return(a>=0&&b>=0)?MX[a][b]:null}
-function plink(i){return"https://gdmissions.app/11th/primary-missions/"+DSL[S.dsp[i]]+"/"+slg(prim(i))}
-function slink(k){return"https://gdmissions.app/11th/secondary-missions/"+SEC[k][1]}
-function pimg(i){return"https://gdmissions.app/assets/11th/primary-missions/"+DSL[S.dsp[i]]+"/"+slg(prim(i))+".png"}
-function simg(k){return"https://gdmissions.app/assets/11th/secondary-missions/defender/"+SEC[k][1].replace(/-defender$/,"")+".png"}
-function openCard(img,page){var u=document.getElementById("pu"),im=document.getElementById("pui"),fb=document.getElementById("puf");
-fb.style.display="none";im.style.display="block";
-im.onerror=function(){im.style.display="none";fb.style.display="block";fb.innerHTML=L().cfail+'<br><a href="'+page+'" target="_blank" rel="noopener">'+L().see+' ↗</a>'};
-im.src=img;u.classList.add("open")}
+var DT={"d":[{"en":"Take and Hold","fr":"Prendre et Tenir"},{"en":"Purge the Foe","fr":"Éliminez l’Adversaire"},{"en":"Disruption","fr":"Perturbation"},{"en":"Reconnaissance","fr":"Reconnaissance"},{"en":"Priority Assets","fr":"Atouts Prioritaires"}],"pm":[[{"en":"Battlefield Dominance","fr":"Domination du Terrain","v":[2,3]},{"en":"Immovable Object","fr":"Objet Inamovible","v":[3,5]},{"en":"Determined Acquisition","fr":"Acquisition Déterminée","v":[2,3]},{"en":"Purge and Secure","fr":"Éliminer et Sécuriser","v":[3,4]},{"en":"Inescapable Dominion","fr":"Domination Inéluctable","v":[4,5]}],[{"en":"Unstoppable Force","fr":"Force Inarrêtable","v":[3,4,5]},{"en":"Meatgrinder","fr":"Hachoir à Viande","v":[3,4,5]},{"en":"Punishment","fr":"Châtiment","v":[4,5,8]},{"en":"Consecrate","fr":"Consécration","v":[3,4,5,6]},{"en":"Destroyer's Wrath","fr":"Courroux du Destructeur","v":[3,4,6]}],[{"en":"Death Trap","fr":"Piège Mortel","v":[2,3,4]},{"en":"Delaying Action","fr":"Action Retardée","v":[2,3,4]},{"en":"Outmanoeuvre","fr":"Surclassé","v":[4,5,6,10]},{"en":"Smoke and Mirrors","fr":"De la Poudre aux Yeux","v":[2,4,10]},{"en":"Locate and Deny","fr":"Localiser et Priver","v":[4,5]}],[{"en":"Reconnaissance Sweep","fr":"Balayage de Reconnaissance","v":[1,3,6]},{"en":"Triangulation","fr":"Triangulation","v":[3,4,6,10]},{"en":"Surveil the Foe","fr":"Surveiller l’Ennemi","v":[4,5]},{"en":"Gather Intel","fr":"Réunir des Informations","v":[4,5,6,7]},{"en":"Search and Scour","fr":"Ratissage","v":[2,3,4,5]}],[{"en":"Secure Asset","fr":"Sécurisation","v":[2,4]},{"en":"Vital Link","fr":"Liaison Vitale","v":[1,2,4,10]},{"en":"Extract Relic","fr":"Extraire la Relique","v":[3,4,5]},{"en":"Vanguard Operation","fr":"Opération d’Avant-garde","v":[2,4,10]},{"en":"Sabotage","fr":"Sabotage","v":[2,3,4]}]],"s":[{"en":"A Grievous Blow","fr":"Un Coup Décisif","v":[4,5]},{"en":"A Tempting Target","fr":"Une Cible Tentante","v":[5]},{"en":"Assassination","fr":"Assassinat","v":[1,3,5]},{"en":"Beacon","fr":"Fanal","v":[3,5]},{"en":"Behind Enemy Lines","fr":"Derrière les Lignes Ennemies","v":[3]},{"en":"Bring It Down","fr":"Abattez-le","v":[4,5]},{"en":"Burden Of Trust","fr":"Le Fardeau de la Confiance","v":[2]},{"en":"Centre Ground","fr":"Position Centrale","v":[3,5]},{"en":"Cleanse","fr":"Purification","v":[2,5]},{"en":"Defend Stronghold","fr":"Défendre le Bastion","v":[2,3]},{"en":"Display of Might","fr":"Démonstration de Force","v":[2,5]},{"en":"Engage On All Fronts","fr":"Engagement sur tous les Fronts","v":[2,3,4,5]},{"en":"Forward Position","fr":"Position Avancée","v":[5]},{"en":"No Prisoners","fr":"Pas de Prisonnier","v":[2]},{"en":"Outflank","fr":"Attaque de Flanc","v":[3,5]},{"en":"Overwhelming Force","fr":"Force Écrasante","v":[3]},{"en":"Plunder","fr":"Pillage","v":[5]},{"en":"Secure No Man's Land","fr":"Sécuriser le No Man’s Land","v":[5]}]};
+var CAP={r:15,g:45};
+function nm(o){return o[S.lang]||o.en}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function prim(i){var a=S.dsp[i],b=S.dsp[1-i];return(a>=0&&b>=0)?DT.pm[a][b]:null}
 function objs(i,r){var a=S.obj[i][r];if(!a)a=S.obj[i][r]=[{k:-1,vp:0},{k:-1,vp:0}];return a}
+function cap(i,c,r,d){var a=c?S.p[i].sv:S.p[i].pv,o=sum(a)-a[r],nv=Math.max(0,Math.min(a[r]+d,CAP.r,CAP.g-o)),ap=nv-a[r];a[r]=nv;return ap}
 var mr=0,msEl=document.getElementById("ms");
+function vbtn(at,vs){var h='<button data-a="v"'+at+' data-v="-1">−1</button>';vs.forEach(function(v){h+='<button data-a="v"'+at+' data-v="'+v+'">+'+v+'</button>'});return h}
 function renderMs(){
 var l=L(),st=msEl.scrollTop,h='<div class="mh"><b>'+l.ms+'</b><div><button data-a="r" data-v="-1">◀</button> <b>'+l.round+(mr+1)+'</b> <button data-a="r" data-v="1">▶</button></div><button data-a="x">'+l.mclose+'</button></div>';
 for(var i=0;i<2;i++){
-h+='<div class="mp p'+i+'"><h3>'+S.names[i].replace(/</g,"&lt;")+'</h3><label>'+l.disp+'<select data-a="d" data-i="'+i+'"><option value="-1">'+l.pick+'</option>';
-DISP.forEach(function(d,k){h+='<option value="'+k+'"'+(S.dsp[i]===k?" selected":"")+'>'+d+'</option>'});
-h+='</select></label>';
-var c=prim(i);
-h+='<p>'+l.prim+' : '+(c?'<b>'+c+'</b> <a href="'+plink(i)+'" data-a="c" data-img="'+pimg(i)+'">'+l.see+'</a>':'<i>'+l.both+'</i>')+'</p><p class="sh">'+l.sec2+'</p>';
+var p=S.p[i],c=prim(i),pat=' data-i="'+i+'" data-t="0"';
+h+='<div class="mp p'+i+'"><div class="r1"><h3>'+esc(S.names[i])+'</h3><select data-a="d" data-i="'+i+'" aria-label="'+l.disp+'"><option value="-1">'+l.disp+'…</option>';
+DT.d.forEach(function(d,k){h+='<option value="'+k+'"'+(S.dsp[i]===k?" selected":"")+'>'+nm(d)+'</option>'});
+h+='</select></div><div class="r2"><span class="lbl">'+l.prim+' : '+(c?'<b>'+nm(c)+'</b>':'<i>'+l.both+'</i>')+'</span></div>';
+if(c)h+='<div class="r2"><b class="pv">'+p.pv[mr]+' '+l.vp+'</b>'+vbtn(pat,c.v)+'</div>';
 objs(i,mr).forEach(function(o,q){
-var at=' data-i="'+i+'" data-q="'+q+'"';
-h+='<div class="ob"><select data-a="s"'+at+'><option value="-1">'+l.pick+'</option>';
-SEC.forEach(function(s2,k){h+='<option value="'+k+'"'+(o.k===k?" selected":"")+'>'+s2[0]+(s2[2]?l.fixed:"")+'</option>'});
-h+='</select>';
-if(o.k>=0)h+='<a href="'+slink(o.k)+'" data-a="c" data-img="'+simg(o.k)+'">'+l.see+'</a><div class="vb"><button data-a="v"'+at+' data-v="-1">−1</button><span>'+o.vp+'</span><button data-a="v"'+at+' data-v="1">+1</button><button data-a="v"'+at+' data-v="5">+5</button></div>';
-h+='</div>'});
-h+='</div>'}
+var at=' data-i="'+i+'" data-q="'+q+'" data-t="1"';
+h+='<div class="r2"><select data-a="s"'+at+'><option value="-1">'+l.sec2+' '+(q+1)+'…</option>';
+DT.s.forEach(function(s2,k){h+='<option value="'+k+'"'+(o.k===k?" selected":"")+'>'+nm(s2)+'</option>'});
+h+='</select>'+(o.k>=0?'<b class="pv">'+o.vp+'</b>'+vbtn(at,DT.s[o.k].v):'')+'</div>'});
+h+='<div class="r2 ft"><span class="tt">'+l.pri+' '+sum(p.pv)+'/'+CAP.g+' · '+l.sec+' '+sum(p.sv)+'/'+CAP.g+'</span><label class="bp"><input type="checkbox" data-a="b" data-i="'+i+'"'+(S.bp[i]?" checked":"")+'> '+l.bp+'</label></div></div>'}
+h+='<small class="dis2">'+l.disc+'</small>';
 msEl.innerHTML=h;msEl.scrollTop=st}
-msEl.addEventListener("click",function(e){var b=e.target.closest("button,a[data-a]");if(!b)return;var a=b.dataset.a;
-if(a==="c"){e.preventDefault();openCard(b.dataset.img,b.href);return}
-if(a==="x"){msEl.style.display="none";return}
+msEl.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var a=b.dataset.a;
+if(a==="x"){msEl.classList.remove("on");return}
 if(a==="r"){mr=Math.max(0,Math.min(4,mr+Number(b.dataset.v)));renderMs();return}
-if(a==="v"){var i=Number(b.dataset.i),o=objs(i,mr)[Number(b.dataset.q)],nv=Math.max(0,o.vp+Number(b.dataset.v)),d=nv-o.vp,p=S.p[i];o.vp=nv;p.sv[mr]=Math.max(0,p.sv[mr]+d);save();renderMs();draw()}});
+if(a==="v"){var i=Number(b.dataset.i),d=Number(b.dataset.v);
+if(b.dataset.t==="1"){var o=objs(i,mr)[Number(b.dataset.q)];d=Math.max(d,-o.vp);o.vp=Math.max(0,o.vp+cap(i,1,mr,d))}
+else cap(i,0,mr,d);
+save();renderMs();draw()}});
 msEl.addEventListener("change",function(e){var t=e.target,a=t.dataset.a,i=Number(t.dataset.i),v=Number(t.value);
 if(a==="d")S.dsp[i]=v;
-else if(a==="s"){var o=objs(i,mr)[Number(t.dataset.q)],p=S.p[i];o.k=v;if(v<0){p.sv[mr]=Math.max(0,p.sv[mr]-o.vp);o.vp=0}}
+else if(a==="s"){var o=objs(i,mr)[Number(t.dataset.q)];o.k=v;if(v<0){cap(i,1,mr,-o.vp);o.vp=0}}
+else if(a==="b")S.bp[i]=t.checked?1:0;
 save();renderMs();draw()});
-document.getElementById("bs").onclick=function(){mr=S.round;renderMs();msEl.style.display="block"};
-document.getElementById("pux").onclick=function(){document.getElementById("pu").classList.remove("open")};
-document.getElementById("pu").addEventListener("click",function(e){if(e.target===this)this.classList.remove("open")});
-document.addEventListener("keydown",function(e){if(e.key==="Escape")document.getElementById("pu").classList.remove("open")});
+document.getElementById("bs").onclick=function(){mr=S.round;renderMs();msEl.classList.add("on")};
 build(0);build(1);labels();draw();
 </script></body></html>
