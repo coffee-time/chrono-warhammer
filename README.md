@@ -1,4 +1,4 @@
-# Chrono CP/PV
+# Chrono CP/PV warhammer 40k 
 
 **FR** — Chronomètre à deux joueurs avec compteur de points de commandement (CP), points de victoire (primaires et secondaires par tour), phases de jeu et récapitulatif PDF avec points de tournoi (échelle 20-0). Interface en français et en anglais.
 
