@@ -251,34 +251,13 @@ body{font-family:system-ui,"Segoe UI",Arial,sans-serif;background:#181716;color:
 .ms button.sbtn b{font-size:.88rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .ms button.sbtn:active{background:linear-gradient(180deg,#34312e,#4b4742)}
 
-.fx{display:none;position:fixed;inset:0;z-index:60;background:#070605;flex-direction:column;overflow:hidden;font-family:system-ui,"Arial Narrow",Arial,sans-serif;touch-action:manipulation}
-.fx.on{display:flex;animation:fxin .25s ease-out,fxout .5s ease-in 3.6s forwards}
-.fx.sh{animation:fxin .25s ease-out,fxsh .45s linear,fxout .5s ease-in 3.6s forwards}
-.fh{flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 50%,#2a1608,#070605 70%)}
-.fh.t{transform:rotate(180deg)}
-.fh .ft{position:relative;z-index:2;text-align:center;font-weight:900;text-transform:uppercase;letter-spacing:3px;font-size:2.3rem;line-height:1.05;color:#f5e8d0;text-shadow:0 0 18px #e07b16,0 3px 0 #000;opacity:0;padding:0 14px}
-.fh .ft small{display:block;margin-top:10px;font-size:.95rem;letter-spacing:6px;color:#e07b16;font-weight:800;text-shadow:none}
-.fx.on .ft{animation:fxslam .5s cubic-bezier(.2,1.4,.4,1) .15s forwards}
-.fr{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:4px solid #e07b16;border-radius:50%;opacity:0}
-.fr.p{animation:fxring .7s ease-out}
-.fb{height:34px;flex:none;background:repeating-linear-gradient(-45deg,#d9ad00 0 12px,#141414 12px 24px);background-size:34px 34px;border-top:3px solid #000;border-bottom:3px solid #000;z-index:3;box-shadow:0 0 22px #000}
-.fx.on .fb{animation:fxbar .35s ease-out,fxstripe .6s linear infinite}
-.ff{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:5}
-.ff.p{animation:fxflash .6s ease-out}
-@keyframes fxin{from{opacity:0}to{opacity:1}}
-@keyframes fxout{to{opacity:0;visibility:hidden}}
-@keyframes fxslam{0%{opacity:0;transform:scale(3)}60%{opacity:1;transform:scale(.93)}100%{opacity:1;transform:scale(1)}}
-@keyframes fxring{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(9)}}
-@keyframes fxbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes fxstripe{to{background-position:34px 0}}
-@keyframes fxflash{0%{opacity:.85}100%{opacity:0}}
-@keyframes fxsh{0%,100%{transform:none}15%{transform:translate(-7px,5px)}30%{transform:translate(6px,-6px)}45%{transform:translate(-5px,-3px)}60%{transform:translate(4px,4px)}80%{transform:translate(-2px,1px)}}
-@media (prefers-reduced-motion:reduce){.fx.on,.fx.sh{animation:fxin .2s,fxout .4s ease-in 2.4s forwards}.fx.on .ft{animation:none;opacity:1}.fx.on .fb{animation:none}.fr.p,.ff.p{animation:none}}
+.z .box.cpx{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:4px 6px;min-height:60px}
+.z .box.cpx .cpm{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1}
+.z .box.cpx button{flex:none;min-width:46px;height:46px;font-size:1.6rem;font-weight:800;line-height:1;padding:0}
 </style></head><body>
 <section class="z p0 flip" id="z0"></section>
-<div class="bar"><button id="bs" class="ms-b">Missions</button><button id="bm">Menu ▾</button><div class="mn" id="mn"><button id="bt">Tour</button><button id="bph">Chrono</button><button id="br">Rotation J1</button><button id="bc">CP</button><button id="bsn">Son</button><button id="bl">FR</button><button id="bx">Export PDF</button><button id="bz" class="rz">Remise à zéro</button><small class="dis" id="dis"></small></div></div>
+<div class="bar"><button id="bs" class="ms-b">Missions</button><button id="bm">Menu ▾</button><div class="mn" id="mn"><button id="bt">Tour</button><button id="bph">Chrono</button><button id="br">Rotation J1</button><button id="bc">CP</button><button id="bl">FR</button><button id="bx">Export PDF</button><button id="bz" class="rz">Remise à zéro</button><small class="dis" id="dis"></small></div></div>
 <section class="z p1" id="z1"></section>
-<div id="fx" class="fx" aria-hidden="true"><div class="fh t"><div class="fr"></div><div class="ft"></div></div><div class="fb"></div><div class="fh"><div class="fr"></div><div class="ft"></div></div><div class="ff"></div></div>
 <div id="pk" class="pp pkp"><div class="pn" id="pkn"></div></div>
 <div id="pp" class="pp"><div class="pn" id="pn"></div></div>
 <div id="ms" class="ms"></div>
@@ -286,13 +265,13 @@ body{font-family:system-ui,"Segoe UI",Arial,sans-serif;background:#181716;color:
 <script>
 var KEY="wh40k-chrono-cp-v2";
 var T={
-fr:{pl:"Joueur ",vp:"PV",rl:"T",dep:"Déploiement",game:"Partie",ph:["Cmdt","Mouv.","Tir","Charge","Combat"],full:["Commandement","Mouvement","Tir","Charge","Combat"],start:"Démarrer",phase:"Phase : ",next:"Suivant : ",end:"Fin de mon tour ▶",take:"Prendre la main",nr:"Tour suivant : actuel ",ppc:"Points de commandement",ppv:"Points de victoire",mn:"Manche ",ptl:"Total manche",gtl:"Total partie",ok:"Fermer",snd:"Son : ",fxt:"Début du combat",pause:"Pause",resume:"Reprendre",vdep:"Valider mon déploiement ▶",vdone:"Déploiement validé ✔ (annuler)",vdone2:"Appuyer pour annuler",round:"Tour ",chrono:"Chrono : ",rot:"Rotation J1 : ",yes:"oui",no:"non",reset:"Remise à zéro",conf:"Confirmer ?",exp:"Export PDF",nm:"Nom du joueur ",lang:"Langue : FR",ms:"Missions",mclose:"Retour",disp:"Force de disposition",prim:"Mission primaire",see:"Voir la carte",sec2:"Missions secondaires",pick:"Choisir…",pick:"— choisir —",fixed:" (fixe)",both:"Choisis les deux forces de disposition pour voir les missions primaires.",mt:"Missions et objectifs",disc:"Outil de fan non officiel, sans lien avec Games Workshop. Warhammer 40,000 et les noms associés sont des marques de Games Workshop. Données des missions : projet communautaire Game Datacards.",bp:"Armée peinte (+10 PV)",bpl:"Peinture",cfail:"La carte ne peut pas s'afficher ici.",done2:"Missions secondaires réalisées :",cpa:["CP : manuel","CP auto : les deux joueurs"],pri:"Primaire",sec:"Secondaire",pc:"Prim.",sc:"Sec.",tpt:"Points de tournoi (échelle 20-0)",dif:"Écart : ",tv:"Total /100",tps:"PT",bar:"Barème 20-0 : 0-5 PV d'écart = 10-10, puis 1 point par tranche de 5 PV (46-50 = 19-1, 51+ = 20-0)",title:"Résultats de la partie",tie:"Égalité : ",each:" PV chacun",win:"Vainqueur : ",vpr:"Points de victoire par tour",pl1:"Joueur",tot:"Total",tu:"Temps utilisé",over:" (dépassé)",lib:"PDF : bibliothèque non chargée",fail:"Export impossible",failc:"Export impossible : ",inapp:"Ouvre la page dans l'appli Claude",done:"PDF téléchargé",loc:"fr-FR",fn:"resultat-warhammer-40k.pdf"},
-en:{pl:"Player ",vp:"VP",rl:"R",dep:"Deployment",game:"Game",ph:["Cmd","Move","Shoot","Charge","Fight"],full:["Command","Movement","Shooting","Charge","Fight"],start:"Start",phase:"Phase: ",next:"Next: ",end:"End my turn ▶",take:"Take over",nr:"Next round: now ",ppc:"Command points",ppv:"Victory points",mn:"Round ",ptl:"Round total",gtl:"Game total",ok:"Close",snd:"Sound: ",fxt:"Battle begins",pause:"Pause",resume:"Resume",vdep:"Validate my deployment ▶",vdone:"Deployment validated ✔ (undo)",vdone2:"Tap to undo",round:"Round ",chrono:"Clock: ",rot:"Flip P1: ",yes:"on",no:"off",reset:"Reset",conf:"Confirm?",exp:"Export PDF",nm:"Player name ",lang:"Language: EN",ms:"Missions",mclose:"Back",disp:"Force disposition",prim:"Primary mission",see:"View card",sec2:"Secondary missions",pick:"Choose…",pick:"— choose —",fixed:" (fixed)",both:"Pick both force dispositions to see the primary missions.",mt:"Missions and objectives",disc:"Unofficial fan tool, not affiliated with or endorsed by Games Workshop. Warhammer 40,000 and related names are trademarks of Games Workshop. Mission data: Game Datacards community project.",bp:"Painted army (+10 VP)",bpl:"Painting",cfail:"The card can't be displayed here.",done2:"Secondary missions scored:",cpa:["CP: manual","Auto CP: both players"],pri:"Primary",sec:"Secondary",pc:"Pri.",sc:"Sec.",tpt:"Tournament points (20-0 scale)",dif:"Difference: ",tv:"Total /100",tps:"TP",bar:"20-0 scale: 0-5 VP difference = 10-10, then 1 point per 5 VP band (46-50 = 19-1, 51+ = 20-0)",title:"Game results",tie:"Tie: ",each:" VP each",win:"Winner: ",vpr:"Victory points per round",pl1:"Player",tot:"Total",tu:"Time used",over:" (overtime)",lib:"PDF library not loaded",fail:"Export failed",failc:"Export failed: ",inapp:"Open the page in the Claude app",done:"PDF downloaded",loc:"en-GB",fn:"warhammer-40k-results.pdf"}
+fr:{pl:"Joueur ",vp:"PV",rl:"T",dep:"Déploiement",game:"Partie",ph:["Cmdt","Mouv.","Tir","Charge","Combat"],full:["Commandement","Mouvement","Tir","Charge","Combat"],start:"Démarrer",phase:"Phase : ",next:"Suivant : ",end:"Fin de mon tour ▶",take:"Prendre la main",nr:"Tour suivant : actuel ",ppc:"Points de commandement",ppv:"Points de victoire",mn:"Manche ",ptl:"Total manche",gtl:"Total partie",ok:"Fermer",pause:"Pause",resume:"Reprendre",vdep:"Valider mon déploiement ▶",vdone:"Déploiement validé ✔ (annuler)",vdone2:"Appuyer pour annuler",round:"Tour ",chrono:"Chrono : ",rot:"Rotation J1 : ",yes:"oui",no:"non",reset:"Remise à zéro",conf:"Confirmer ?",exp:"Export PDF",nm:"Nom du joueur ",lang:"Langue : FR",ms:"Missions",mclose:"Retour",disp:"Force de disposition",prim:"Mission primaire",see:"Voir la carte",sec2:"Missions secondaires",pick:"Choisir…",pick:"— choisir —",fixed:" (fixe)",both:"Choisis les deux forces de disposition pour voir les missions primaires.",mt:"Missions et objectifs",disc:"Outil de fan non officiel, sans lien avec Games Workshop. Warhammer 40,000 et les noms associés sont des marques de Games Workshop. Données des missions : projet communautaire Game Datacards.",bp:"Armée peinte (+10 PV)",bpl:"Peinture",cfail:"La carte ne peut pas s'afficher ici.",done2:"Missions secondaires réalisées :",cpa:["CP : manuel","CP auto : les deux joueurs"],pri:"Primaire",sec:"Secondaire",pc:"Prim.",sc:"Sec.",tpt:"Points de tournoi (échelle 20-0)",dif:"Écart : ",tv:"Total /100",tps:"PT",bar:"Barème 20-0 : 0-5 PV d'écart = 10-10, puis 1 point par tranche de 5 PV (46-50 = 19-1, 51+ = 20-0)",title:"Résultats de la partie",tie:"Égalité : ",each:" PV chacun",win:"Vainqueur : ",vpr:"Points de victoire par tour",pl1:"Joueur",tot:"Total",tu:"Temps utilisé",over:" (dépassé)",lib:"PDF : bibliothèque non chargée",fail:"Export impossible",failc:"Export impossible : ",inapp:"Ouvre la page dans l'appli Claude",done:"PDF téléchargé",loc:"fr-FR",fn:"resultat-warhammer-40k.pdf"},
+en:{pl:"Player ",vp:"VP",rl:"R",dep:"Deployment",game:"Game",ph:["Cmd","Move","Shoot","Charge","Fight"],full:["Command","Movement","Shooting","Charge","Fight"],start:"Start",phase:"Phase: ",next:"Next: ",end:"End my turn ▶",take:"Take over",nr:"Next round: now ",ppc:"Command points",ppv:"Victory points",mn:"Round ",ptl:"Round total",gtl:"Game total",ok:"Close",pause:"Pause",resume:"Resume",vdep:"Validate my deployment ▶",vdone:"Deployment validated ✔ (undo)",vdone2:"Tap to undo",round:"Round ",chrono:"Clock: ",rot:"Flip P1: ",yes:"on",no:"off",reset:"Reset",conf:"Confirm?",exp:"Export PDF",nm:"Player name ",lang:"Language: EN",ms:"Missions",mclose:"Back",disp:"Force disposition",prim:"Primary mission",see:"View card",sec2:"Secondary missions",pick:"Choose…",pick:"— choose —",fixed:" (fixed)",both:"Pick both force dispositions to see the primary missions.",mt:"Missions and objectives",disc:"Unofficial fan tool, not affiliated with or endorsed by Games Workshop. Warhammer 40,000 and related names are trademarks of Games Workshop. Mission data: Game Datacards community project.",bp:"Painted army (+10 VP)",bpl:"Painting",cfail:"The card can't be displayed here.",done2:"Secondary missions scored:",cpa:["CP: manual","Auto CP: both players"],pri:"Primary",sec:"Secondary",pc:"Pri.",sc:"Sec.",tpt:"Tournament points (20-0 scale)",dif:"Difference: ",tv:"Total /100",tps:"TP",bar:"20-0 scale: 0-5 VP difference = 10-10, then 1 point per 5 VP band (46-50 = 19-1, 51+ = 20-0)",title:"Game results",tie:"Tie: ",each:" VP each",win:"Winner: ",vpr:"Victory points per round",pl1:"Player",tot:"Total",tu:"Time used",over:" (overtime)",lib:"PDF library not loaded",fail:"Export failed",failc:"Export failed: ",inapp:"Open the page in the Claude app",done:"PDF downloaded",loc:"en-GB",fn:"warhammer-40k-results.pdf"}
 };
 function defLang(){return((navigator.language||"fr").slice(0,2)==="fr")?"fr":"en"}
 function L(){return T[S.lang]}
 function mk(){return{dep:1800,game:5400,cp:0,pv:[0,0,0,0,0],sv:[0,0,0,0,0]}}
-function fresh(){var l=defLang();return{p:[mk(),mk()],tp:"dep",dv:[0,0],snd:1,active:null,run:false,flip:true,round:0,done:0,ph:0,sel:[0,0],cat:[0,0],bp:[0,0],dsp:[-1,-1],obj:[[],[]],cpm:1,lang:l,names:[T[l].pl+"1",T[l].pl+"2"]}}
+function fresh(){var l=defLang();return{p:[mk(),mk()],tp:"dep",dv:[0,0],active:null,run:false,flip:true,round:0,done:0,ph:0,sel:[0,0],cat:[0,0],bp:[0,0],dsp:[-1,-1],obj:[[],[]],cpm:1,lang:l,names:[T[l].pl+"1",T[l].pl+"2"]}}
 var S=fresh();
 try{var r=localStorage.getItem(KEY);if(r){S=JSON.parse(r);S.run=false}}catch(e){}
 if(!S.lang)S.lang=defLang();
@@ -301,7 +280,7 @@ if(!S.cat)S.cat=[0,0];
 if(!S.dsp)S.dsp=[-1,-1];
 if(!S.bp)S.bp=[0,0];
 if(!S.obj)S.obj=[[],[]];
-if(S.tp==="game"&&S.gs===undefined)S.gs=1;if(!S.dv)S.dv=[0,0];if(S.snd===undefined)S.snd=1;
+if(S.tp==="game"&&S.gs===undefined)S.gs=1;if(!S.dv)S.dv=[0,0];
 S.p.forEach(function(p){if(!p.sv)p.sv=[0,0,0,0,0]});
 if(!S.names)S.names=[L().pl+"1",L().pl+"2"];
 var last=0,armed=0;
@@ -316,7 +295,7 @@ function endTurn(i){S.done++;if(S.done>=2){if(S.round<4)gainBoth();S.round=Math.
 function build(i){
 var z=document.getElementById("z"+i),h="",l=L();
 h+='<div class="row"><input class="nm" maxlength="20" aria-label="'+l.nm+(i+1)+'"></div>';
-h+='<div class="bx"><button class="box cpx" data-o="cp" aria-label="CP"><small class="lb">CP</small><span class="cpv"></span></button><button class="box pvx" data-o="vp" aria-label="'+l.vp+'"><small class="lb">'+l.vp+'</small><span class="pvv"></span></button></div>';
+h+='<div class="bx"><div class="box cpx"><button data-d="-1" aria-label="CP −1">−</button><div class="cpm"><small class="lb">CP</small><span class="cpv"></span></div><button data-d="1" aria-label="CP +1">+</button></div><button class="box pvx" data-o="vp" aria-label="'+l.vp+'"><small class="lb">'+l.vp+'</small><span class="pvv"></span></button></div>';
 h+='<div class="rs">';for(var r=0;r<5;r++)h+='<div class="c" data-r="'+r+'"></div>';h+='</div>';
 h+='<div class="ps">';for(var k=0;k<5;k++)h+='<div class="h" data-p="'+k+'">'+l.ph[k]+'</div>';h+='<div class="h on hd">'+l.dep+'</div></div>';
 h+='<div class="tm"><div class="t" data-k="dep"><small>'+l.dep+'</small><span></span></div><div class="t" data-k="game"><small>'+l.game+'</small><span></span></div></div><div class="pw"><button class="pz"></button><button class="pass"></button><div class="gr"><span class="gl"></span><span class="gs"></span></div></div>';
@@ -324,6 +303,7 @@ z.innerHTML=h;
 var ni=z.querySelector(".nm");ni.value=S.names[i];ni.oninput=function(){S.names[i]=ni.value;save()};
 z.querySelectorAll(".c").forEach(function(c){c.onclick=function(){S.sel[i]=Number(c.dataset.r);save();draw()}});
 z.querySelectorAll(".h").forEach(function(c){c.onclick=function(){if(S.active===i){S.ph=Number(c.dataset.p);save();draw()}}});
+z.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){S.p[i].cp=Math.max(0,S.p[i].cp+Number(b.dataset.d));save();draw()}});
 z.querySelectorAll("[data-o]").forEach(function(b){b.onclick=function(){openPp(i,b.dataset.o)}});
 z.querySelector(".pz").onclick=function(){if(S.active===null)return;tick();S.run=!S.run;last=Date.now();save();draw()};
 z.querySelector(".pass").onclick=function(){
@@ -331,7 +311,7 @@ tick();
 if(S.active===null){S.active=i;S.ph=0;gainBoth()}
 else if(S.tp==="dep"){
 if(S.dv[i]){S.dv[i]=0;S.active=i}
-else if(S.active===i){S.dv[i]=1;if(S.dv[1-i]){S.tp="game";S.gs=1;S.round=0;S.done=0;S.ph=0;S.sel=[0,0];S.active=null;S.run=false;last=Date.now();save();draw();showFx();return}S.active=1-i}
+else if(S.active===i){S.dv[i]=1;if(S.dv[1-i]){S.tp="game";S.gs=1;S.round=0;S.done=0;S.ph=0;S.sel=[0,0];S.active=null;S.run=false;last=Date.now();save();draw();return}S.active=1-i}
 else S.active=i}
 else if(S.active===i){if(S.ph<4)S.ph++;else endTurn(i)}
 else{S.active=i;S.ph=0}
@@ -361,7 +341,7 @@ document.querySelectorAll(".pz").forEach(function(q){q.innerHTML=ic;q.setAttribu
 document.querySelectorAll(".z").forEach(function(q){q.classList.toggle("dep",S.tp==="dep");q.classList.toggle("game",S.tp==="game")});
 document.getElementById("bt").textContent=l.nr+(S.round+1)+"/5 ▶";
 document.getElementById("bph").textContent=l.chrono+(S.tp==="dep"?l.dep:l.game);
-document.getElementById("br").textContent=l.rot+(S.flip?l.yes:l.no);document.getElementById("bc").textContent=l.cpa[S.cpm];document.getElementById("bsn").textContent=l.snd+(S.snd?l.yes:l.no)}
+document.getElementById("br").textContent=l.rot+(S.flip?l.yes:l.no);document.getElementById("bc").textContent=l.cpa[S.cpm]}
 function labels(){var l=L();document.documentElement.lang=S.lang;
 document.getElementById("bs").innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></svg><span>'+l.ms+'</span>';document.getElementById("bx").textContent=l.exp;document.getElementById("dis").textContent=l.disc;document.getElementById("bl").textContent=l.lang;
 if(!armed)document.getElementById("bz").textContent=l.reset}
@@ -415,7 +395,7 @@ try{var u=URL.createObjectURL(D.output("blob")),a2=document.createElement("a");a
 }
 setInterval(function(){tick();if(S.run){save();draw()}},250);
 document.getElementById("bt").onclick=function(){S.round=(S.round+1)%5;S.sel=[S.round,S.round];S.done=0;save();draw()};
-document.getElementById("bph").onclick=function(){tick();S.tp=S.tp==="dep"?"game":"dep";if(S.tp==="game"&&!S.gs){S.gs=1;S.round=0;S.done=0;S.ph=0;S.sel=[0,0];if(S.active!==null)gainBoth();if(S.tp==="game")setTimeout(showFx,50)}last=Date.now();save();draw()};
+document.getElementById("bph").onclick=function(){tick();S.tp=S.tp==="dep"?"game":"dep";if(S.tp==="game"&&!S.gs){S.gs=1;S.round=0;S.done=0;S.ph=0;S.sel=[0,0];if(S.active!==null)gainBoth();}last=Date.now();save();draw()};
 document.getElementById("br").onclick=function(){S.flip=!S.flip;save();draw()};
 document.getElementById("bz").onclick=function(){var b=this;
 if(!armed){armed=1;b.textContent=L().conf;setTimeout(function(){armed=0;b.textContent=L().reset},3000);return}
@@ -492,26 +472,5 @@ save();draw();rp()});
 document.getElementById("pp").addEventListener("click",function(e){if(e.target===this)closePp()});
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closePp()});
 
-var fxT=[],fxAC=null,fxMaster=null;
-function drumHit(t,f,v,len){var c=fxAC,o=c.createOscillator(),g=c.createGain();o.type="sine";o.frequency.setValueAtTime(f*2.1,t);o.frequency.exponentialRampToValueAtTime(f,t+.12);
-g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.006);g.gain.exponentialRampToValueAtTime(.001,t+len);o.connect(g);g.connect(fxMaster);o.start(t);o.stop(t+len+.05);
-var n=c.createBufferSource(),b=c.createBuffer(1,Math.floor(c.sampleRate*.12),c.sampleRate),d=b.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);
-n.buffer=b;var lp=c.createBiquadFilter();lp.type="lowpass";lp.frequency.value=900;var ng=c.createGain();ng.gain.value=v*.55;n.connect(lp);lp.connect(ng);ng.connect(fxMaster);n.start(t)}
-function drumCrash(t){var c=fxAC,n=c.createBufferSource(),b=c.createBuffer(1,Math.floor(c.sampleRate*1.6),c.sampleRate),d=b.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.2);
-n.buffer=b;var hp=c.createBiquadFilter();hp.type="highpass";hp.frequency.value=2500;var g=c.createGain();g.gain.value=.35;n.connect(hp);hp.connect(g);g.connect(fxMaster);n.start(t)}
-var FXB=[[0,70,1,.9],[.62,70,.8,.6],[1.1,85,.7,.5],[1.4,85,.7,.5],[1.7,70,.85,.6],[2.0,95,.6,.3],[2.1,95,.65,.3],[2.2,95,.7,.3],[2.3,95,.75,.3],[2.4,95,.8,.3],[2.47,95,.85,.3],[2.54,95,.9,.3],[2.6,95,.95,.3],[2.8,52,1.4,1.6]];
-function showFx(){var el=document.getElementById("fx");if(!el)return;fxT.forEach(clearTimeout);fxT=[];
-var l=L();el.querySelectorAll(".ft").forEach(function(t){t.innerHTML=l.fxt+"<small>"+l.round+"1 / 5</small>"});
-el.classList.remove("on","sh");void el.offsetWidth;el.classList.add("on");
-var rings=el.querySelectorAll(".fr"),fl=el.querySelector(".ff");
-function pulse(big){rings.forEach(function(r){r.classList.remove("p");void r.offsetWidth;r.classList.add("p")});if(big){fl.classList.remove("p");void fl.offsetWidth;fl.classList.add("p");el.classList.remove("sh");void el.offsetWidth;el.classList.add("sh");try{navigator.vibrate&&navigator.vibrate([60,40,120])}catch(e){}}}
-if(S.snd){try{fxAC=fxAC||new (window.AudioContext||window.webkitAudioContext)();if(fxAC.state==="suspended")fxAC.resume();
-fxMaster=fxAC.createGain();fxMaster.gain.value=.9;fxMaster.connect(fxAC.destination);var t0=fxAC.currentTime+.05;
-FXB.forEach(function(h){drumHit(t0+h[0],h[1],h[2],h[3])});drumCrash(t0+2.8)}catch(e){}}
-FXB.forEach(function(h,k){fxT.push(setTimeout(function(){pulse(k===FXB.length-1)},50+h[0]*1000))});
-fxT.push(setTimeout(hideFx,4100))}
-function hideFx(){fxT.forEach(clearTimeout);fxT=[];var el=document.getElementById("fx");el.classList.remove("on","sh");if(fxMaster){try{fxMaster.gain.cancelScheduledValues(0);fxMaster.gain.setTargetAtTime(0,fxAC.currentTime,.05)}catch(e){}}}
-document.getElementById("fx").addEventListener("click",hideFx);
-document.getElementById("bsn").onclick=function(){S.snd=S.snd?0:1;save();draw()};
 build(0);build(1);labels();draw();
 </script></body></html>
