@@ -256,11 +256,11 @@ body{font-family:system-ui,"Segoe UI",Arial,sans-serif;background:#181716;color:
 .z .box.cpx button{flex:none;min-width:46px;height:46px;font-size:1.6rem;font-weight:800;line-height:1;padding:0}
 </style></head><body>
 <section class="z p0 flip" id="z0"></section>
-<div class="bar"><button id="bs" class="ms-b">Missions</button><button id="bm">Menu ▾</button><div class="mn" id="mn"><button id="bt">Tour</button><button id="bph">Chrono</button><button id="br">Rotation J1</button><button id="bc">CP</button><button id="bl">FR</button><button id="bx">Export PDF</button><button id="bz" class="rz">Remise à zéro</button><small class="dis" id="dis"></small></div></div>
+<div class="bar"><button id="bs" class="ms-b">Missions</button><button id="bm">Menu ▾</button><div class="mn" id="mn"><button id="bl">FR</button><button id="bx">Export PDF</button><button id="bi">Info</button><button id="bz" class="rz">Remise à zéro</button></div></div>
 <section class="z p1" id="z1"></section>
 <div id="pk" class="pp pkp"><div class="pn" id="pkn"></div></div>
 <div id="pp" class="pp"><div class="pn" id="pn"></div></div>
-<div id="ms" class="ms"></div>
+<div id="inf" class="pp"><div class="pn" id="infn"></div></div> <div id="ms" class="ms"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 var KEY="wh40k-chrono-cp-v2";
@@ -275,7 +275,7 @@ function fresh(){var l=defLang();return{p:[mk(),mk()],tp:"dep",dv:[0,0],active:n
 var S=fresh();
 try{var r=localStorage.getItem(KEY);if(r){S=JSON.parse(r);S.run=false}}catch(e){}
 if(!S.lang)S.lang=defLang();
-if(S.cpm===undefined||S.cpm>1)S.cpm=1;
+S.cpm=1;S.flip=true;
 if(!S.cat)S.cat=[0,0];
 if(!S.dsp)S.dsp=[-1,-1];
 if(!S.bp)S.bp=[0,0];
@@ -341,11 +341,11 @@ else b.innerHTML=l.take}
 var ic=S.run?'<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>':'<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
 document.querySelectorAll(".pz").forEach(function(q){q.innerHTML=ic;q.setAttribute("aria-label",S.run?l.pause:l.resume)});
 document.querySelectorAll(".z").forEach(function(q){q.classList.toggle("dep",S.tp==="dep");q.classList.toggle("game",S.tp==="game")});
-document.getElementById("bt").textContent=l.nr+(S.round+1)+"/5 ▶";
-document.getElementById("bph").textContent=l.chrono+(S.tp==="dep"?l.dep:l.game);
-document.getElementById("br").textContent=l.rot+(S.flip?l.yes:l.no);document.getElementById("bc").textContent=l.cpa[S.cpm]}
+
+
+}
 function labels(){var l=L();document.documentElement.lang=S.lang;
-document.getElementById("bs").innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></svg><span>'+l.ms+'</span>';document.getElementById("bx").textContent=l.exp;document.getElementById("dis").textContent=l.disc;document.getElementById("bl").textContent=l.lang;
+document.getElementById("bs").innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></svg><span>'+l.ms+'</span>';document.getElementById("bx").textContent=l.exp;document.getElementById("bi").textContent="ⓘ Info";document.getElementById("bl").textContent=l.lang;
 if(!armed)document.getElementById("bz").textContent=l.reset}
 function tot(p){return sum(p.pv)+sum(p.sv)}
 function fin(i){return tot(S.p[i])+(S.bp[i]?10:0)}
@@ -420,9 +420,9 @@ if(dl){try{await dl.save({filename:l.fn,data:D.output("arraybuffer")})}catch(e){
 try{var u=URL.createObjectURL(D.output("blob")),a2=document.createElement("a");a2.href=u;a2.download=l.fn;document.body.appendChild(a2);a2.click();a2.remove();warn(window.top!==window?l.inapp:l.done)}catch(e){warn(l.fail)}
 }
 setInterval(function(){tick();if(S.run){save();draw()}},250);
-document.getElementById("bt").onclick=function(){S.round=(S.round+1)%5;S.sel=[S.round,S.round];S.done=0;save();draw()};
-document.getElementById("bph").onclick=function(){tick();S.tp=S.tp==="dep"?"game":"dep";if(S.tp==="game"&&!S.gs){S.gs=1;S.round=0;S.done=0;S.ph=0;S.sel=[0,0];if(S.active!==null)gainBoth();}last=Date.now();save();draw()};
-document.getElementById("br").onclick=function(){S.flip=!S.flip;save();draw()};
+
+
+
 document.getElementById("bz").onclick=function(){var b=this;
 if(!armed){armed=1;b.textContent=L().conf;setTimeout(function(){armed=0;b.textContent=L().reset},3000);return}
 armed=0;var nm=S.names,lg=S.lang,cm=S.cpm;S=fresh();S.names=nm;S.lang=lg;S.cpm=cm;b.textContent=L().reset;save();draw()};
@@ -432,7 +432,8 @@ for(var i=0;i<2;i++)if(S.names[i]===o.pl+(i+1))S.names[i]=n.pl+(i+1);
 save();build(0);build(1);labels();draw()};
 document.getElementById("bm").onclick=function(){document.getElementById("mn").classList.toggle("open")};
 document.addEventListener("click",function(e){var m=document.getElementById("mn");if(m.classList.contains("open")&&!m.contains(e.target)&&e.target.id!=="bm")m.classList.remove("open")});
-document.getElementById("bc").onclick=function(){S.cpm=(S.cpm+1)%2;save();draw()};
+document.getElementById("bi").onclick=function(){document.getElementById("mn").classList.remove("open");var l=L();document.getElementById("infn").innerHTML='<div class="ph"><span>ⓘ Info</span></div><div style="font:400 .95rem/1.5 system-ui,Arial,sans-serif;text-transform:none;letter-spacing:0;color:#ece6d6;margin:4px 0 14px">'+esc(l.disc)+'</div><div style="font:400 .95rem/1.5 system-ui,Arial,sans-serif;text-transform:none;letter-spacing:0;margin:0 0 14px">GitHub :<br><a href="https://github.com/coffee-time/chrono-warhammer" target="_blank" rel="noopener" style="color:#f0b429;font-size:.88rem">github.com/coffee-time/chrono-warhammer</a></div><button class="ok" data-x="1">'+(S.lang==="fr"?"Retour":"Back")+'</button>';document.getElementById("inf").classList.add("open")};
+document.getElementById("inf").addEventListener("click",function(e){if(e.target.id==="inf"||e.target.closest("[data-x]"))this.classList.remove("open")});
 var DT={"d":[{"en":"Take and Hold","fr":"Prendre et Tenir"},{"en":"Purge the Foe","fr":"Éliminez l’Adversaire"},{"en":"Disruption","fr":"Perturbation"},{"en":"Reconnaissance","fr":"Reconnaissance"},{"en":"Priority Assets","fr":"Atouts Prioritaires"}],"pm":[[{"en":"Battlefield Dominance","fr":"Domination du Terrain","v":[2,3]},{"en":"Immovable Object","fr":"Objet Inamovible","v":[3,5]},{"en":"Determined Acquisition","fr":"Acquisition Déterminée","v":[2,3]},{"en":"Purge and Secure","fr":"Éliminer et Sécuriser","v":[3,4]},{"en":"Inescapable Dominion","fr":"Domination Inéluctable","v":[4,5]}],[{"en":"Unstoppable Force","fr":"Force Inarrêtable","v":[3,4,5]},{"en":"Meatgrinder","fr":"Hachoir à Viande","v":[3,4,5]},{"en":"Punishment","fr":"Châtiment","v":[4,5,8]},{"en":"Consecrate","fr":"Consécration","v":[3,4,5,6]},{"en":"Destroyer's Wrath","fr":"Courroux du Destructeur","v":[3,4,6]}],[{"en":"Death Trap","fr":"Piège Mortel","v":[2,3,4]},{"en":"Delaying Action","fr":"Action Retardée","v":[2,3,4]},{"en":"Outmanoeuvre","fr":"Surclassé","v":[4,5,6,10]},{"en":"Smoke and Mirrors","fr":"De la Poudre aux Yeux","v":[2,4,10]},{"en":"Locate and Deny","fr":"Localiser et Priver","v":[4,5]}],[{"en":"Reconnaissance Sweep","fr":"Balayage de Reconnaissance","v":[1,3,6]},{"en":"Triangulation","fr":"Triangulation","v":[3,4,6,10]},{"en":"Surveil the Foe","fr":"Surveiller l’Ennemi","v":[4,5]},{"en":"Gather Intel","fr":"Réunir des Informations","v":[4,5,6,7]},{"en":"Search and Scour","fr":"Ratissage","v":[2,3,4,5]}],[{"en":"Secure Asset","fr":"Sécurisation","v":[2,4]},{"en":"Vital Link","fr":"Liaison Vitale","v":[1,2,4,10]},{"en":"Extract Relic","fr":"Extraire la Relique","v":[3,4,5]},{"en":"Vanguard Operation","fr":"Opération d’Avant-garde","v":[2,4,10]},{"en":"Sabotage","fr":"Sabotage","v":[2,3,4]}]],"s":[{"en":"A Grievous Blow","fr":"Un Coup Décisif","v":[4,5]},{"en":"A Tempting Target","fr":"Une Cible Tentante","v":[5]},{"en":"Assassination","fr":"Assassinat","v":[1,3,5]},{"en":"Beacon","fr":"Fanal","v":[3,5]},{"en":"Behind Enemy Lines","fr":"Derrière les Lignes Ennemies","v":[3]},{"en":"Bring It Down","fr":"Abattez-le","v":[4,5]},{"en":"Burden Of Trust","fr":"Le Fardeau de la Confiance","v":[2]},{"en":"Centre Ground","fr":"Position Centrale","v":[3,5]},{"en":"Cleanse","fr":"Purification","v":[2,5]},{"en":"Defend Stronghold","fr":"Défendre le Bastion","v":[2,3]},{"en":"Display of Might","fr":"Démonstration de Force","v":[2,5]},{"en":"Engage On All Fronts","fr":"Engagement sur tous les Fronts","v":[2,3,4,5]},{"en":"Forward Position","fr":"Position Avancée","v":[5]},{"en":"No Prisoners","fr":"Pas de Prisonnier","v":[2]},{"en":"Outflank","fr":"Attaque de Flanc","v":[3,5]},{"en":"Overwhelming Force","fr":"Force Écrasante","v":[3]},{"en":"Plunder","fr":"Pillage","v":[5]},{"en":"Secure No Man's Land","fr":"Sécuriser le No Man’s Land","v":[5]}]};
 var CAP={r:15,g:45};
 function nm(o){return o[S.lang]||o.en}
